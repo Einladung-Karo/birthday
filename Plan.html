@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ablaufplan - Karos B-Day & Einweihungsparty</title>
+  <title>Ablauf & Features - Karo's B-day & Erste Homeparty</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,7 +28,7 @@
     .card {
       width: 90%;
       max-width: 440px;
-      padding: 40px 25px;
+      padding: 40px 22px;
       text-align: center;
       border-radius: 24px;
       background-image: url('03c7b7376b525b4ddd27b404d1195dea.jpg');
@@ -45,7 +45,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(0,0,0,0.52) 0%, rgba(0,0,0,0.78) 100%);
+      background: linear-gradient(180deg, rgba(0,0,0,0.52) 0%, rgba(0,0,0,0.85) 100%);
       z-index: 0;
     }
 
@@ -61,7 +61,7 @@
 
     .title-script {
       font-family: 'Dancing Script', cursive;
-      font-size: 2.8rem;
+      font-size: 2.5rem;
       color: #f3e5ab;
       margin: 0 0 4px 0;
       text-shadow: 0 2px 10px rgba(0,0,0,0.4);
@@ -70,9 +70,9 @@
     .subtitle {
       font-size: 0.85rem;
       text-transform: uppercase;
-      letter-spacing: 0.25em;
+      letter-spacing: 0.22em;
       opacity: 0.85;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
       color: #e2d8ce;
     }
 
@@ -83,8 +83,31 @@
       border-radius: 12px;
       font-size: 0.88rem;
       color: #f3e5ab;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
       line-height: 1.4;
+    }
+
+    /* Features Grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 25px;
+      text-align: left;
+    }
+
+    .feature-card {
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px;
+      padding: 10px;
+      font-size: 0.82rem;
+    }
+
+    .feature-card strong {
+      color: #f3e5ab;
+      display: block;
+      margin-bottom: 3px;
     }
 
     /* Timeline Styling */
@@ -96,7 +119,7 @@
     }
 
     .timeline-item {
-      margin-bottom: 22px;
+      margin-bottom: 20px;
       position: relative;
       padding-left: 18px;
     }
@@ -121,8 +144,8 @@
     }
 
     .event-title {
-      font-size: 1.1rem;
-      margin: 3px 0 0 0;
+      font-size: 1.05rem;
+      margin: 2px 0 0 0;
       font-weight: 600;
     }
 
@@ -155,29 +178,54 @@
 <body>
 
 <div class="card">
-  <h1 class="title-script">Ablauf der Feier</h1>
-  <div class="subtitle">Programmübersicht</div>
+  <h1 class="title-script">Ablauf & Specials</h1>
+  <div class="subtitle">Programm & Highlights</div>
 
   <div class="motto-banner">
-    🔥 <strong>Motto:</strong> Sexy Anziehen<br>
-    📍 <strong>Adresse:</strong> Straße 123, Wildau
+    🔥 <strong>Dresscode:</strong> Sexy<br>
+    📍 <strong>Adresse:</strong> Richard-Sorge-Str. 52, Wildau
+  </div>
+
+  <!-- Specials / Features -->
+  <div class="features-grid">
+    <div class="feature-card">
+      <strong>🍿 Snacks & Essen</strong>
+      Verpflegung & Snacks für die ganze Nacht
+    </div>
+    <div class="feature-card">
+      <strong>🫧 Whirlpool</strong>
+      Badesachen nicht vergessen!
+    </div>
+    <div class="feature-card">
+      <strong>🪩 Mini Club</strong>
+      Sound, Lichter & Dancefloor
+    </div>
+    <div class="feature-card">
+      <strong>🔥 Lagerfeuer</strong>
+      Chillout-Area im Garten
+    </div>
   </div>
 
   <div class="timeline">
     <div class="timeline-item">
-      <div class="time">18:00 Uhr</div>
-      <div class="event-title">Eintreffen der Gäste</div>
-      <div class="event-desc">Welcome Drink & Ankommen</div>
-    </div>
-    <div class="timeline-item">
       <div class="time">19:00 Uhr</div>
-      <div class="event-title">Bierpong Turnier</div>
-      <div class="event-desc">Macht euch bereit für die Battles! 🍻</div>
+      <div class="event-title">Einlass & Welcome Drinks</div>
+      <div class="event-desc">Ankommen, Anstoßen & Haus auskundschaften</div>
     </div>
     <div class="timeline-item">
       <div class="time">20:00 Uhr</div>
-      <div class="event-title">DJ & Party Time</div>
-      <div class="event-desc">Dancefloor eröffnet & Open End 🔥</div>
+      <div class="event-title">Essen, Snacks & Warm-Up</div>
+      <div class="event-desc">Gemütliches Essen & Vorbereitung auf die Nacht</div>
+    </div>
+    <div class="timeline-item">
+      <div class="time">21:00 Uhr</div>
+      <div class="event-title">Bierpong & Party-Games</div>
+      <div class="event-desc">Spannende Turniere an der Bierpong-Station</div>
+    </div>
+    <div class="timeline-item">
+      <div class="time">22:00 Uhr</div>
+      <div class="event-title">Mini Club, Whirlpool & Lagerfeuer</div>
+      <div class="event-desc">Party im Mini Club, Entspannen im Whirlpool & Outdoor-Vibes 🔥</div>
     </div>
   </div>
 
