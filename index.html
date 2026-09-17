@@ -283,6 +283,94 @@
       color: #ffffff;
     }
 
+    /* Overlay Panel für Ablaufplan */
+    .plan-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 15, 17, 0.96);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      z-index: 10;
+      padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-y: auto;
+      transform: translateY(-100%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .plan-overlay.active {
+      transform: translateY(0);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin: 15px 0 20px 0;
+      text-align: left;
+      width: 100%;
+    }
+
+    .feature-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px;
+      padding: 8px 10px;
+      font-size: 0.78rem;
+    }
+
+    .feature-card strong {
+      color: #f3e5ab;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .timeline {
+      text-align: left;
+      margin: 10px 0 20px 5px;
+      padding-left: 15px;
+      border-left: 2px solid rgba(243, 229, 171, 0.4);
+      width: 100%;
+    }
+
+    .timeline-item {
+      margin-bottom: 16px;
+      position: relative;
+      padding-left: 15px;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -21px;
+      top: 4px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #f3e5ab;
+      box-shadow: 0 0 10px rgba(243, 229, 171, 0.8);
+    }
+
+    .time {
+      font-weight: 700;
+      color: #f3e5ab;
+      font-size: 0.9rem;
+    }
+
+    .event-title {
+      font-size: 0.98rem;
+      margin: 2px 0 0 0;
+      font-weight: 600;
+    }
+
+    .event-desc {
+      font-size: 0.78rem;
+      opacity: 0.8;
+      margin-top: 2px;
+    }
+
     /* Easter Egg Popup */
     .modal {
       display: none;
@@ -357,6 +445,7 @@
 <body>
 
 <div class="card">
+  <!-- HAUPTSEITE -->
   <div class="subtitle">Einladung zur Party</div>
   <div class="title-script">Karo's B-day</div>
 
@@ -393,12 +482,64 @@
   </div>
 
   <div class="button-group">
-    <a class="btn btn-primary" href="Karo_Party.ics" download>
+    <button class="btn btn-primary" id="addCalendarBtn">
       📅 Zum Kalender hinzufügen
-    </a>
-    <a class="btn" href="plan.html">
+    </button>
+    <button class="btn" id="openPlanBtn">
       🍹 Ablaufplan & Party-Features
-    </a>
+    </button>
+  </div>
+
+  <!-- ABLAUFPLAN OVERLAY (Integrierte 2. Seite) -->
+  <div class="plan-overlay" id="planOverlay">
+    <div class="title-script" style="font-size: 2.2rem;">Ablauf & Specials</div>
+    <div class="subtitle" style="margin-bottom: 10px;">Programm & Highlights</div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <strong>🍿 Snacks & Essen</strong>
+        Verpflegung für die ganze Nacht
+      </div>
+      <div class="feature-card">
+        <strong>🫧 Whirlpool</strong>
+        Badesachen mitbringen!
+      </div>
+      <div class="feature-card">
+        <strong>🪩 Mini Club</strong>
+        Sound, Lichter & Dancefloor
+      </div>
+      <div class="feature-card">
+        <strong>🔥 Lagerfeuer</strong>
+        Chillout-Area im Garten
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="time">19:00 Uhr</div>
+        <div class="event-title">Einlass & Welcome Drinks</div>
+        <div class="event-desc">Ankommen, Anstoßen & Haus erkunden</div>
+      </div>
+      <div class="timeline-item">
+        <div class="time">20:00 Uhr</div>
+        <div class="event-title">Essen & Warm-Up</div>
+        <div class="event-desc">Snacks, Essen & Vorglühen</div>
+      </div>
+      <div class="timeline-item">
+        <div class="time">21:00 Uhr</div>
+        <div class="event-title">Bierpong & Party-Games</div>
+        <div class="event-desc">Spannende Turniere am Tisch</div>
+      </div>
+      <div class="timeline-item">
+        <div class="time">22:00 Uhr</div>
+        <div class="event-title">Mini Club, Whirlpool & Feuer</div>
+        <div class="event-desc">Party im Club, Entspannen im Whirlpool & Outdoor Vibes 🔥</div>
+      </div>
+    </div>
+
+    <button class="btn" id="closePlanBtn" style="width: 100%; margin-top: auto;">
+      ← Zurück zur Einladung
+    </button>
   </div>
 </div>
 
@@ -464,7 +605,37 @@ document.addEventListener("DOMContentLoaded", function() {
   updateCountdown();
   setInterval(updateCountdown, 1000);
 
-  // Easter Egg Modal Logik
+  // Ablaufplan Overlay Steuerung
+  const planOverlay = document.getElementById('planOverlay');
+  document.getElementById('openPlanBtn').addEventListener('click', () => planOverlay.classList.add('active'));
+  document.getElementById('closePlanBtn').addEventListener('click', () => planOverlay.classList.remove('active'));
+
+  // Dynamischer Kalendereintrag (.ics Download per JS)
+  document.getElementById('addCalendarBtn').addEventListener('click', () => {
+    const icsData = [
+      "BEGIN:VCALENDAR",
+      "VERSION:2.0",
+      "PRODID:-//Karo B-day//DE",
+      "BEGIN:VEVENT",
+      "SUMMARY:Karo's B-day & Erste Homeparty 🎉",
+      "DESCRIPTION:Dresscode: Sexy\\nFeatures: Musik, Snacks & Essen, Lagerfeuer, Mini Club, Whirlpool, Bierpong!",
+      "LOCATION:Richard-Sorge-Str. 52, Wildau",
+      "DTSTART:20261017T170000Z",
+      "DTEND:20261018T030000Z",
+      "END:VEVENT",
+      "END:VCALENDAR"
+    ].join("\n");
+
+    const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.setAttribute('download', 'Karo_Party.ics');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  });
+
+  // Easter Egg Modal
   const dateNumber = document.querySelector('.number');
   const modal = document.getElementById('easterEgg');
   const closeModal = document.getElementById('closeModal');
