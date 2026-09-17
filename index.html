@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Karo's B-day & Erste Homeparty - Save the Date</title>
 
   <!-- Fonts -->
@@ -16,89 +16,101 @@
     * {
       box-sizing: border-box;
       -webkit-tap-highlight-color: transparent;
+      margin: 0;
+      padding: 0;
     }
 
+    /* Sperrt Swipen und Scrollen vollständig auf der Hauptseite */
     html, body {
       width: 100%;
-      height: 100%;
-      max-width: 100vw;
-      overflow-x: hidden; /* Verhindert Wischen nach links/rechts */
-      position: relative;
+      height: 100vh;
+      height: 100dvh; /* Dynamische mobile Bildschirmschirmhöhe */
+      overflow: hidden !important;
+      touch-action: none; /* Blockiert Touch-Gesten wie Swipen/Scrollen */
+      position: fixed;
+      inset: 0;
     }
 
     body {
-      margin: 0;
-      padding: 12px 0; /* Rand oben/unten minimiert */
       background-image: url('45cd36920b58b9b5c6f67bacad483ceb.jpg');
       background-repeat: no-repeat;
       background-position: center;
       background-size: cover;
-      background-attachment: fixed;
       font-family: 'Playfair Display', serif;
       display: flex;
       justify-content: center;
       align-items: center;
       color: #ffffff;
+      padding: 8px;
     }
 
     body::before {
       content: "";
-      position: fixed;
+      position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(8, 2, 4, 0.3) 0%, rgba(12, 2, 5, 0.75) 100%);
+      background: linear-gradient(180deg, rgba(8, 2, 4, 0.35) 0%, rgba(12, 2, 5, 0.8) 100%);
       z-index: 0;
     }
 
+    /* Dynamisch skalierender Container: Passt sich immer exakt der Displayhöhe an */
     .card {
       position: relative;
       z-index: 1;
-      width: 95%; /* Breitere Darstellung auf Handys */
-      max-width: 420px;
-      padding: 24px 16px; /* Viel schlankere Innenabstände */
+      width: 96%;
+      max-width: 400px;
+      height: 96%;
+      max-height: 98dvh;
+      padding: clamp(10px, 2vh, 20px) clamp(10px, 3vw, 16px);
       text-align: center;
-      border-radius: 24px;
-      background: rgba(12, 3, 5, 0.5);
+      border-radius: 20px;
+      background: rgba(12, 3, 5, 0.55);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       border: 1px solid rgba(139, 0, 0, 0.4);
       box-shadow: 0 15px 40px rgba(0, 0, 0, 0.85), 0 0 25px rgba(122, 12, 27, 0.35);
+
+      /* Verteilt den verfügbaren Platz optimal von oben nach unten */
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
       align-items: center;
       animation: fadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(15px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
+    .header-section {
+      width: 100%;
+      flex-shrink: 0;
+    }
+
     .subtitle {
-      font-size: 0.75rem;
+      font-size: clamp(0.65rem, 1.2vh, 0.75rem);
       text-transform: uppercase;
-      letter-spacing: 0.25em;
+      letter-spacing: 0.2em;
       opacity: 0.95;
-      margin-bottom: 2px;
       color: #d88b94;
     }
 
     .title-script {
       font-family: 'Dancing Script', cursive;
-      font-size: 2.5rem;
+      font-size: clamp(2rem, 4vh, 2.5rem);
       color: #b31225;
-      margin: 0;
       line-height: 1;
       text-shadow: 0 2px 15px rgba(122, 12, 27, 0.8);
     }
 
     .names-container {
-      margin: 6px 0 10px 0;
-      min-height: 32px;
+      margin: 2px 0 4px 0;
+      min-height: clamp(24px, 3.5vh, 32px);
     }
 
     .names {
       font-family: 'Dancing Script', cursive;
-      font-size: 1.8rem;
+      font-size: clamp(1.4rem, 2.5vh, 1.7rem);
       color: #ffffff;
       border-right: 2px solid #b31225;
       white-space: nowrap;
@@ -117,80 +129,73 @@
       backdrop-filter: blur(10px);
       border: 1px solid rgba(179, 18, 37, 0.5);
       border-radius: 50px;
-      padding: 6px 14px;
-      font-size: 0.8rem;
-      letter-spacing: 0.08em;
-      margin-bottom: 12px;
+      padding: 4px 12px;
+      font-size: clamp(0.7rem, 1.2vh, 0.8rem);
+      letter-spacing: 0.05em;
       color: #f7bdc4;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 4px;
       font-weight: 600;
-      box-shadow: 0 0 15px rgba(122, 12, 27, 0.35);
+      box-shadow: 0 0 12px rgba(122, 12, 27, 0.35);
     }
 
     .highlights-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 6px;
+      gap: clamp(4px, 1vh, 8px);
       width: 100%;
-      margin-bottom: 12px;
     }
 
     .grid-item {
       background: rgba(10, 2, 4, 0.7);
       border: 1px solid rgba(179, 18, 37, 0.3);
-      border-radius: 12px;
-      padding: 8px 6px;
+      border-radius: 10px;
+      padding: clamp(4px, 1vh, 8px) 4px;
       text-align: center;
     }
 
     .grid-icon {
-      font-size: 1.1rem;
+      font-size: clamp(0.9rem, 1.8vh, 1.1rem);
       display: block;
-      margin-bottom: 2px;
     }
 
     .grid-title {
-      font-size: 0.75rem;
+      font-size: clamp(0.65rem, 1.2vh, 0.75rem);
       font-weight: 700;
       color: #ffffff;
-      margin-bottom: 2px;
     }
 
     .grid-desc {
-      font-size: 0.65rem;
+      font-size: clamp(0.55rem, 1vh, 0.65rem);
       color: #d88b94;
-      margin: 0;
       line-height: 1.1;
     }
 
     .event-date-box {
-      margin: 0 0 12px 0;
       background: rgba(15, 3, 5, 0.55);
       backdrop-filter: blur(12px);
       border: 1px solid rgba(179, 18, 37, 0.4);
-      padding: 12px 16px;
-      border-radius: 16px;
+      padding: clamp(6px, 1.2vh, 10px) 12px;
+      border-radius: 14px;
       width: 100%;
-      box-shadow: inset 0 0 20px rgba(122, 12, 27, 0.2);
+      box-shadow: inset 0 0 15px rgba(122, 12, 27, 0.2);
     }
 
     .day-name {
-      font-size: 0.85rem;
+      font-size: clamp(0.7rem, 1.2vh, 0.8rem);
       text-transform: uppercase;
-      letter-spacing: 0.22em;
+      letter-spacing: 0.18em;
       color: #d88b94;
     }
 
     .number {
-      font-size: 3.2rem;
+      font-size: clamp(2.2rem, 5vh, 3rem);
       font-weight: 700;
-      line-height: 1;
-      margin: 0;
+      line-height: 0.95;
       cursor: pointer;
       display: inline-block;
-      transition: transform 0.2s ease, color 0.2s ease;
+      transition: transform 0.2s ease;
       color: #ffffff;
       text-shadow: 0 0 15px rgba(179, 18, 37, 0.7);
     }
@@ -200,15 +205,14 @@
     }
 
     .month-year {
-      font-size: 0.95rem;
-      letter-spacing: 0.1em;
+      font-size: clamp(0.8rem, 1.4vh, 0.9rem);
+      letter-spacing: 0.08em;
       font-weight: 600;
       color: #ffffff;
     }
 
     .time-location {
-      font-size: 0.85rem;
-      margin-top: 4px;
+      font-size: clamp(0.7rem, 1.2vh, 0.8rem);
       color: #c92a3a;
       font-weight: 600;
     }
@@ -216,8 +220,7 @@
     .countdown {
       display: flex;
       justify-content: center;
-      gap: 6px;
-      margin: 0 0 12px 0;
+      gap: 5px;
       width: 100%;
     }
 
@@ -225,65 +228,60 @@
       background: rgba(10, 2, 4, 0.75);
       backdrop-filter: blur(6px);
       border: 1px solid rgba(179, 18, 37, 0.35);
-      border-radius: 12px;
-      padding: 6px 4px;
+      border-radius: 10px;
+      padding: clamp(3px, 0.8vh, 6px) 2px;
       flex: 1;
-      min-width: 45px;
     }
 
     .countdown-value {
-      font-size: 1.1rem;
+      font-size: clamp(0.9rem, 1.8vh, 1.1rem);
       font-weight: 700;
       display: block;
       color: #ffffff;
     }
 
     .countdown-label {
-      font-size: 0.55rem;
+      font-size: clamp(0.5rem, 0.9vh, 0.55rem);
       text-transform: uppercase;
-      letter-spacing: 0.08em;
       opacity: 0.9;
-      margin-top: 1px;
       display: block;
       color: #d88b94;
     }
 
     .location-box {
-      font-size: 0.82rem;
-      margin-bottom: 14px;
-      line-height: 1.3;
+      font-size: clamp(0.7rem, 1.2vh, 0.8rem);
+      line-height: 1.25;
       background: rgba(10, 2, 4, 0.75);
-      padding: 10px 12px;
-      border-radius: 12px;
+      padding: clamp(6px, 1vh, 8px) 10px;
+      border-radius: 10px;
       border: 1px solid rgba(179, 18, 37, 0.35);
       width: 100%;
       color: #ffffff;
     }
 
-    /* Buttons */
     .button-group {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: clamp(4px, 1vh, 6px);
       width: 100%;
     }
 
     .btn {
-      padding: 11px 16px;
-      font-size: 0.85rem;
+      padding: clamp(6px, 1.2vh, 10px) 12px;
+      font-size: clamp(0.75rem, 1.3vh, 0.85rem);
       font-family: 'Playfair Display', serif;
       color: #ffffff;
       background: rgba(15, 3, 5, 0.5);
       backdrop-filter: blur(8px);
       border: 1px solid rgba(179, 18, 37, 0.4);
-      border-radius: 25px;
+      border-radius: 20px;
       cursor: pointer;
       text-decoration: none;
       transition: all 0.2s ease;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 4px;
       font-weight: 600;
     }
 
@@ -304,7 +302,7 @@
       color: #f7bdc4;
     }
 
-    /* POPUPS */
+    /* POPUPS (Erlaubt internes Scrollen nur im Pop-up, falls nötig) */
     .modal {
       display: none;
       position: fixed;
@@ -316,12 +314,13 @@
       justify-content: center;
       align-items: center;
       padding: 16px;
+      touch-action: auto; /* Aktiviert Scrollen im Pop-up */
     }
 
     .modal-content {
       background: rgba(18, 3, 6, 0.95);
       border: 1px solid rgba(179, 18, 37, 0.5);
-      padding: 24px 18px;
+      padding: 20px 16px;
       border-radius: 20px;
       text-align: center;
       max-width: 380px;
@@ -340,23 +339,22 @@
 
     .modal-title {
       font-family: 'Dancing Script', cursive;
-      font-size: 2.1rem;
+      font-size: 1.8rem;
       color: #b31225;
-      margin: 0 0 12px 0;
-      text-shadow: 0 2px 10px rgba(122, 12, 27, 0.6);
+      margin-bottom: 10px;
     }
 
     .timeline {
-      margin: 12px 0;
+      margin: 10px 0;
       padding-left: 10px;
       border-left: 2px solid rgba(179, 18, 37, 0.5);
       text-align: left;
     }
 
     .timeline-item {
-      margin-bottom: 14px;
+      margin-bottom: 10px;
       position: relative;
-      padding-left: 12px;
+      padding-left: 10px;
     }
 
     .timeline-item::before {
@@ -374,20 +372,18 @@
     .time {
       font-weight: 700;
       color: #c92a3a;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
     }
 
     .event-title {
-      font-size: 0.9rem;
-      margin: 1px 0 0 0;
+      font-size: 0.85rem;
       font-weight: 600;
       color: #ffffff;
     }
 
     .event-desc {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       opacity: 0.85;
-      margin-top: 2px;
       color: #d88b94;
     }
 
@@ -396,51 +392,46 @@
       border: none;
       color: #d88b94;
       font-size: 0.8rem;
-      margin-top: 12px;
+      margin-top: 10px;
       cursor: pointer;
       text-decoration: underline;
     }
 
-    /* Easter Egg Input */
     .modal input {
       width: 100%;
-      padding: 10px;
-      margin: 12px 0;
-      border-radius: 10px;
+      padding: 8px;
+      margin: 10px 0;
+      border-radius: 8px;
       border: 1px solid rgba(179, 18, 37, 0.4);
       background: #20050a;
       color: #fff;
       text-align: center;
-      font-size: 0.9rem;
-    }
-
-    .modal input:focus {
-      outline: none;
-      border-color: #b31225;
+      font-size: 0.85rem;
     }
 
     #result {
-      margin-top: 10px;
-      font-size: 0.85rem;
+      margin-top: 8px;
+      font-size: 0.8rem;
       font-weight: 600;
     }
 
     #secretImage {
       display: none;
-      margin-top: 12px;
+      margin-top: 10px;
       max-width: 100%;
-      border-radius: 10px;
+      border-radius: 8px;
     }
   </style>
 </head>
 <body>
 
 <div class="card">
-  <div class="subtitle">Einladung zur Party</div>
-  <div class="title-script">Karo's B-day</div>
-
-  <div class="names-container">
-    <div class="names" id="typed"></div>
+  <div class="header-section">
+    <div class="subtitle">Einladung zur Party</div>
+    <div class="title-script">Karo's B-day</div>
+    <div class="names-container">
+      <div class="names" id="typed"></div>
+    </div>
   </div>
 
   <div class="info-badge">
@@ -534,8 +525,8 @@
 <!-- POPUP 2: Easter Egg Rätsel -->
 <div id="easterEgg" class="modal">
   <div class="modal-content">
-    <div class="modal-title" style="font-size: 1.8rem;">✨ Geheimes Rätsel</div>
-    <p style="font-size: 0.85rem; opacity: 0.85; line-height: 1.3;">Wie heißt der Ort, an dem wir uns verlobt haben?</p>
+    <div class="modal-title">✨ Geheimes Rätsel</div>
+    <p style="font-size: 0.8rem; opacity: 0.85;">Wie heißt der Ort, an dem wir uns verlobt haben?</p>
     <input id="answer" type="text" placeholder="Antwort eingeben...">
     <button id="checkAnswer" class="btn btn-primary" style="width:100%;">Prüfen</button>
     <div id="result"></div>
@@ -546,6 +537,13 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
+  // Sicherheitsnetz gegen Swipen/Scrollen per JavaScript
+  document.body.addEventListener('touchmove', function(e) {
+    if (!e.target.closest('.modal-content')) {
+      e.preventDefault();
+    }
+  }, { passive: false });
+
   // Typing Effekt
   const text = "& Erste Homeparty 🎉";
   const typed = document.getElementById("typed");
@@ -573,7 +571,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const distance = eventDate - now;
 
     if(distance < 0) {
-      countdownEl.innerHTML = "<div style='padding:6px; font-weight:bold; color:#b31225;'>Die Party läuft! 🎉</div>";
+      countdownEl.innerHTML = "<div style='padding:4px; font-weight:bold; color:#b31225;'>Die Party läuft! 🎉</div>";
       return;
     }
 
@@ -593,7 +591,7 @@ document.addEventListener("DOMContentLoaded", function() {
   updateCountdown();
   setInterval(updateCountdown, 1000);
 
-  // Konfetti-Effekt beim Klick auf Zusage & Datum
+  // Konfetti-Effekt
   function triggerConfetti() {
     confetti({
       particleCount: 70,
@@ -607,7 +605,7 @@ document.addEventListener("DOMContentLoaded", function() {
     triggerConfetti();
   });
 
-  // Popup 1: Ablaufplan Steuerungs-Logik
+  // Pop-ups Steuerung
   const openPlanBtn = document.getElementById('openPlanBtn');
   const planModal = document.getElementById('planModal');
   const closePlanModal = document.getElementById('closePlanModal');
@@ -620,7 +618,6 @@ document.addEventListener("DOMContentLoaded", function() {
     planModal.style.display = 'none';
   });
 
-  // Popup 2: Easter Egg Steuerungs-Logik
   const dateTrigger = document.getElementById('dateTrigger');
   const easterEggModal = document.getElementById('easterEgg');
   const closeEasterEgg = document.getElementById('closeEasterEgg');
