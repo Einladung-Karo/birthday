@@ -2,6 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
+  <!-- viewport-fit=cover ist essenziell für Safari auf dem iPhone -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Karo's B-day & Erste Homeparty - Save the Date</title>
 
@@ -20,13 +21,12 @@
       padding: 0;
     }
 
-    /* Sperrt Swipen und Scrollen vollständig auf der Hauptseite */
+    /* Sperrt Wischen/Scrollen vollständig */
     html, body {
       width: 100%;
-      height: 100vh;
-      height: 100dvh; /* Dynamische mobile Bildschirmschirmhöhe */
+      height: 100%;
       overflow: hidden !important;
-      touch-action: none; /* Blockiert Touch-Gesten wie Swipen/Scrollen */
+      touch-action: none;
       position: fixed;
       inset: 0;
     }
@@ -41,7 +41,12 @@
       justify-content: center;
       align-items: center;
       color: #ffffff;
-      padding: 8px;
+
+      /* Beachtet die Safe Area von iPhones (z.B. Notch & Home-Balken unten) */
+      padding-top: env(safe-area-inset-top, 10px);
+      padding-bottom: env(safe-area-inset-bottom, 15px);
+      padding-left: env(safe-area-inset-left, 10px);
+      padding-right: env(safe-area-inset-right, 10px);
     }
 
     body::before {
@@ -52,43 +57,44 @@
       z-index: 0;
     }
 
-    /* Dynamisch skalierender Container: Passt sich immer exakt der Displayhöhe an */
-    .card {
+    /* Der Transform-Scaling-Wrapper garantiert, dass die Karte NIEMALS abgeschnitten wird */
+    .card-wrapper {
       position: relative;
       z-index: 1;
-      width: 96%;
+      width: 100%;
       max-width: 400px;
-      height: 96%;
-      max-height: 98dvh;
-      padding: clamp(10px, 2vh, 20px) clamp(10px, 3vw, 16px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transform-origin: center center;
+      transition: transform 0.2s ease-out;
+    }
+
+    .card {
+      width: 95%;
+      padding: 16px 14px;
       text-align: center;
       border-radius: 20px;
-      background: rgba(12, 3, 5, 0.55);
+      background: rgba(12, 3, 5, 0.6);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       border: 1px solid rgba(139, 0, 0, 0.4);
       box-shadow: 0 15px 40px rgba(0, 0, 0, 0.85), 0 0 25px rgba(122, 12, 27, 0.35);
 
-      /* Verteilt den verfügbaren Platz optimal von oben nach unten */
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      gap: 8px;
       align-items: center;
-      animation: fadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation: fadeIn 1s ease forwards;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(15px); }
+      from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .header-section {
-      width: 100%;
-      flex-shrink: 0;
-    }
-
     .subtitle {
-      font-size: clamp(0.65rem, 1.2vh, 0.75rem);
+      font-size: 0.7rem;
       text-transform: uppercase;
       letter-spacing: 0.2em;
       opacity: 0.95;
@@ -97,20 +103,20 @@
 
     .title-script {
       font-family: 'Dancing Script', cursive;
-      font-size: clamp(2rem, 4vh, 2.5rem);
+      font-size: 2.2rem;
       color: #b31225;
       line-height: 1;
       text-shadow: 0 2px 15px rgba(122, 12, 27, 0.8);
     }
 
     .names-container {
-      margin: 2px 0 4px 0;
-      min-height: clamp(24px, 3.5vh, 32px);
+      margin: 1px 0 2px 0;
+      min-height: 26px;
     }
 
     .names {
       font-family: 'Dancing Script', cursive;
-      font-size: clamp(1.4rem, 2.5vh, 1.7rem);
+      font-size: 1.5rem;
       color: #ffffff;
       border-right: 2px solid #b31225;
       white-space: nowrap;
@@ -130,7 +136,7 @@
       border: 1px solid rgba(179, 18, 37, 0.5);
       border-radius: 50px;
       padding: 4px 12px;
-      font-size: clamp(0.7rem, 1.2vh, 0.8rem);
+      font-size: 0.75rem;
       letter-spacing: 0.05em;
       color: #f7bdc4;
       display: inline-flex;
@@ -143,7 +149,7 @@
     .highlights-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: clamp(4px, 1vh, 8px);
+      gap: 6px;
       width: 100%;
     }
 
@@ -151,23 +157,23 @@
       background: rgba(10, 2, 4, 0.7);
       border: 1px solid rgba(179, 18, 37, 0.3);
       border-radius: 10px;
-      padding: clamp(4px, 1vh, 8px) 4px;
+      padding: 6px 4px;
       text-align: center;
     }
 
     .grid-icon {
-      font-size: clamp(0.9rem, 1.8vh, 1.1rem);
+      font-size: 1rem;
       display: block;
     }
 
     .grid-title {
-      font-size: clamp(0.65rem, 1.2vh, 0.75rem);
+      font-size: 0.7rem;
       font-weight: 700;
       color: #ffffff;
     }
 
     .grid-desc {
-      font-size: clamp(0.55rem, 1vh, 0.65rem);
+      font-size: 0.6rem;
       color: #d88b94;
       line-height: 1.1;
     }
@@ -176,23 +182,23 @@
       background: rgba(15, 3, 5, 0.55);
       backdrop-filter: blur(12px);
       border: 1px solid rgba(179, 18, 37, 0.4);
-      padding: clamp(6px, 1.2vh, 10px) 12px;
+      padding: 8px 12px;
       border-radius: 14px;
       width: 100%;
       box-shadow: inset 0 0 15px rgba(122, 12, 27, 0.2);
     }
 
     .day-name {
-      font-size: clamp(0.7rem, 1.2vh, 0.8rem);
+      font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 0.18em;
       color: #d88b94;
     }
 
     .number {
-      font-size: clamp(2.2rem, 5vh, 3rem);
+      font-size: 2.5rem;
       font-weight: 700;
-      line-height: 0.95;
+      line-height: 1;
       cursor: pointer;
       display: inline-block;
       transition: transform 0.2s ease;
@@ -205,16 +211,17 @@
     }
 
     .month-year {
-      font-size: clamp(0.8rem, 1.4vh, 0.9rem);
+      font-size: 0.85rem;
       letter-spacing: 0.08em;
       font-weight: 600;
       color: #ffffff;
     }
 
     .time-location {
-      font-size: clamp(0.7rem, 1.2vh, 0.8rem);
+      font-size: 0.75rem;
       color: #c92a3a;
       font-weight: 600;
+      margin-top: 2px;
     }
 
     .countdown {
@@ -229,19 +236,19 @@
       backdrop-filter: blur(6px);
       border: 1px solid rgba(179, 18, 37, 0.35);
       border-radius: 10px;
-      padding: clamp(3px, 0.8vh, 6px) 2px;
+      padding: 4px 2px;
       flex: 1;
     }
 
     .countdown-value {
-      font-size: clamp(0.9rem, 1.8vh, 1.1rem);
+      font-size: 1rem;
       font-weight: 700;
       display: block;
       color: #ffffff;
     }
 
     .countdown-label {
-      font-size: clamp(0.5rem, 0.9vh, 0.55rem);
+      font-size: 0.52rem;
       text-transform: uppercase;
       opacity: 0.9;
       display: block;
@@ -249,10 +256,10 @@
     }
 
     .location-box {
-      font-size: clamp(0.7rem, 1.2vh, 0.8rem);
+      font-size: 0.75rem;
       line-height: 1.25;
       background: rgba(10, 2, 4, 0.75);
-      padding: clamp(6px, 1vh, 8px) 10px;
+      padding: 6px 10px;
       border-radius: 10px;
       border: 1px solid rgba(179, 18, 37, 0.35);
       width: 100%;
@@ -262,13 +269,13 @@
     .button-group {
       display: flex;
       flex-direction: column;
-      gap: clamp(4px, 1vh, 6px);
+      gap: 6px;
       width: 100%;
     }
 
     .btn {
-      padding: clamp(6px, 1.2vh, 10px) 12px;
-      font-size: clamp(0.75rem, 1.3vh, 0.85rem);
+      padding: 8px 12px;
+      font-size: 0.8rem;
       font-family: 'Playfair Display', serif;
       color: #ffffff;
       background: rgba(15, 3, 5, 0.5);
@@ -302,7 +309,7 @@
       color: #f7bdc4;
     }
 
-    /* POPUPS (Erlaubt internes Scrollen nur im Pop-up, falls nötig) */
+    /* POPUPS */
     .modal {
       display: none;
       position: fixed;
@@ -314,7 +321,7 @@
       justify-content: center;
       align-items: center;
       padding: 16px;
-      touch-action: auto; /* Aktiviert Scrollen im Pop-up */
+      touch-action: auto;
     }
 
     .modal-content {
@@ -325,16 +332,10 @@
       text-align: center;
       max-width: 380px;
       width: 100%;
-      max-height: 85vh;
+      max-height: 80vh;
       overflow-y: auto;
       box-shadow: 0 15px 40px rgba(0,0,0,0.9), 0 0 25px rgba(122, 12, 27, 0.4);
       position: relative;
-      animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
-
-    @keyframes modalFadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
     }
 
     .modal-title {
@@ -425,68 +426,70 @@
 </head>
 <body>
 
-<div class="card">
-  <div class="header-section">
-    <div class="subtitle">Einladung zur Party</div>
-    <div class="title-script">Karo's B-day</div>
-    <div class="names-container">
-      <div class="names" id="typed"></div>
+<div class="card-wrapper" id="cardWrapper">
+  <div class="card" id="mainCard">
+    <div class="header-section">
+      <div class="subtitle">Einladung zur Party</div>
+      <div class="title-script">Karo's B-day</div>
+      <div class="names-container">
+        <div class="names" id="typed"></div>
+      </div>
     </div>
-  </div>
 
-  <div class="info-badge">
-    🔥 Dresscode: Sexy
-  </div>
-
-  <!-- Highlights Grid -->
-  <div class="highlights-grid">
-    <div class="grid-item">
-      <span class="grid-icon">🍿</span>
-      <div class="grid-title">Snacks & Drinks</div>
-      <p class="grid-desc">All Night Long</p>
+    <div class="info-badge">
+      🔥 Dresscode: Sexy
     </div>
-    <div class="grid-item">
-      <span class="grid-icon">🫧</span>
-      <div class="grid-title">Whirlpool</div>
-      <p class="grid-desc">Badesachen mitnehmen</p>
+
+    <!-- Highlights Grid -->
+    <div class="highlights-grid">
+      <div class="grid-item">
+        <span class="grid-icon">🍿</span>
+        <div class="grid-title">Snacks & Drinks</div>
+        <p class="grid-desc">All Night Long</p>
+      </div>
+      <div class="grid-item">
+        <span class="grid-icon">🫧</span>
+        <div class="grid-title">Whirlpool</div>
+        <p class="grid-desc">Badesachen mitnehmen</p>
+      </div>
+      <div class="grid-item">
+        <span class="grid-icon">🪩</span>
+        <div class="grid-title">Mini Club</div>
+        <p class="grid-desc">Dancefloor & Sound</p>
+      </div>
+      <div class="grid-item">
+        <span class="grid-icon">🔥</span>
+        <div class="grid-title">Lagerfeuer</div>
+        <p class="grid-desc">Garten Chillout</p>
+      </div>
     </div>
-    <div class="grid-item">
-      <span class="grid-icon">🪩</span>
-      <div class="grid-title">Mini Club</div>
-      <p class="grid-desc">Dancefloor & Sound</p>
+
+    <!-- Datum -->
+    <div class="event-date-box">
+      <div class="day-name">Samstag</div>
+      <div class="number" id="dateTrigger" title="Klick mich für Konfetti & Rätsel!">17</div>
+      <div class="month-year">Oktober 2026</div>
+      <div class="time-location">⏰ Einlass ab 19:00 Uhr</div>
     </div>
-    <div class="grid-item">
-      <span class="grid-icon">🔥</span>
-      <div class="grid-title">Lagerfeuer</div>
-      <p class="grid-desc">Garten Chillout</p>
+
+    <div class="countdown" id="countdown"></div>
+
+    <div class="location-box">
+      📍 <strong>Location:</strong><br>
+      Richard-Sorge-Str. 52, Wildau
     </div>
-  </div>
 
-  <!-- Datum -->
-  <div class="event-date-box">
-    <div class="day-name">Samstag</div>
-    <div class="number" id="dateTrigger" title="Klick mich für Konfetti & Rätsel!">17</div>
-    <div class="month-year">Oktober 2026</div>
-    <div class="time-location">⏰ Einlass ab 19:00 Uhr</div>
-  </div>
-
-  <div class="countdown" id="countdown"></div>
-
-  <div class="location-box">
-    📍 <strong>Location:</strong><br>
-    Richard-Sorge-Str. 52, Wildau
-  </div>
-
-  <div class="button-group">
-    <a href="https://wa.me/?text=Ich%20bin%20bei%20Karos%20B-Day%20dabei!%20🎉" target="_blank" class="btn btn-rsvp" id="rsvpBtn">
-      💌 Zusage via WhatsApp
-    </a>
-    <button class="btn btn-primary" id="downloadIcsBtn">
-      📅 Zum Kalender hinzufügen
-    </button>
-    <button class="btn" id="openPlanBtn">
-      🍹 Ablaufplan der Nacht
-    </button>
+    <div class="button-group">
+      <a href="https://wa.me/?text=Ich%20bin%20bei%20Karos%20B-Day%20dabei!%20🎉" target="_blank" class="btn btn-rsvp" id="rsvpBtn">
+        💌 Zusage via WhatsApp
+      </a>
+      <button class="btn btn-primary" id="downloadIcsBtn">
+        📅 Zum Kalender hinzufügen
+      </button>
+      <button class="btn" id="openPlanBtn">
+        🍹 Ablaufplan der Nacht
+      </button>
+    </div>
   </div>
 </div>
 
@@ -537,7 +540,31 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-  // Sicherheitsnetz gegen Swipen/Scrollen per JavaScript
+  // DYNAMISCHES SKALIEREN: Berechnet exakt die sichtbare Display-Höhe unter iOS Safari
+  function fitCardToScreen() {
+    const wrapper = document.getElementById('cardWrapper');
+    const card = document.getElementById('mainCard');
+
+    // Setze Skalierung kurz zurück, um reale Höhe zu messen
+    wrapper.style.transform = 'scale(1)';
+
+    const availableHeight = window.innerHeight - 30; // 30px Sicherheitsabstand oben/unten
+    const cardHeight = card.offsetHeight;
+
+    if (cardHeight > availableHeight) {
+      const scaleFactor = availableHeight / cardHeight;
+      wrapper.style.transform = `scale(${scaleFactor})`;
+    } else {
+      wrapper.style.transform = 'scale(1)';
+    }
+  }
+
+  // Beim Laden und Ändern der Fenstergröße neu berechnen
+  fitCardToScreen();
+  window.addEventListener('resize', fitCardToScreen);
+  window.addEventListener('orientationchange', fitCardToScreen);
+
+  // Verhindert Touch-Gesten/Swipen auf dem Body
   document.body.addEventListener('touchmove', function(e) {
     if (!e.target.closest('.modal-content')) {
       e.preventDefault();
