@@ -2,474 +2,480 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Karo's B-day & Erste Homeparty - Save the Date</title>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <!-- Canvas Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <style>
-    * { box-sizing: border-box; }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+    html, body {
+      height: 100%;
+      overflow: hidden; /* Verhindert ungewolltes Scrollen auf Mobile */
+    }
 
     body {
       margin: 0;
-      padding: 20px 0;
-      width: 100%;
-      min-height: 100vh;
-      background: #0f0f11;
+      padding: 10px;
+      width: 100vw;
+      height: 100vh;
+      background-image: url('45cd36920b58b9b5c6f67bacad483ceb.jpg');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
       font-family: 'Playfair Display', serif;
       display: flex;
       justify-content: center;
       align-items: center;
       color: #ffffff;
-    }
-
-    /* Card Container */
-    .card {
-      width: 90%;
-      max-width: 440px;
-      padding: 40px 22px;
-      text-align: center;
-      border-radius: 24px;
-      background-image: url('03c7b7376b525b4ddd27b404d1195dea.jpg');
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: cover;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
       position: relative;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      animation: fadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-    /* Gradient Overlay */
-    .card::before {
+    body::before {
       content: "";
-      position: absolute;
+      position: fixed;
       inset: 0;
-      background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.8) 100%);
+      background: linear-gradient(180deg, rgba(8, 2, 4, 0.3) 0%, rgba(12, 2, 5, 0.75) 100%);
       z-index: 0;
     }
 
-    .card > * {
+    .card {
       position: relative;
       z-index: 1;
+      width: 100%;
+      max-width: 420px;
+      max-height: 98vh; /* Passt exakt in die Bildschirmhöhe */
+      padding: 18px 14px;
+      text-align: center;
+      border-radius: 22px;
+      background: rgba(12, 3, 5, 0.55);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(139, 0, 0, 0.4);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.85), 0 0 20px rgba(122, 12, 27, 0.35);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
+      from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Typografie */
     .subtitle {
-      font-size: 0.8rem;
+      font-size: 0.7rem;
       text-transform: uppercase;
-      letter-spacing: 0.28em;
-      opacity: 0.9;
-      margin-bottom: 4px;
-      color: #e2d8ce;
+      letter-spacing: 0.25em;
+      opacity: 0.95;
+      color: #d88b94;
     }
 
     .title-script {
       font-family: 'Dancing Script', cursive;
-      font-size: 2.5rem;
-      color: #f3e5ab;
+      font-size: 2.3rem;
+      color: #b31225;
       margin: 0;
-      line-height: 1.1;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+      line-height: 1;
+      text-shadow: 0 2px 12px rgba(122, 12, 27, 0.8);
     }
 
     .names-container {
-      margin: 12px 0 14px 0;
-      min-height: 38px;
+      margin: 2px 0 6px 0;
+      min-height: 28px;
     }
 
     .names {
       font-family: 'Dancing Script', cursive;
-      font-size: 1.9rem;
+      font-size: 1.5rem;
       color: #ffffff;
-      border-right: 2px solid #f3e5ab;
+      border-right: 2px solid #b31225;
       white-space: nowrap;
       display: inline-block;
       animation: blinkCursor 0.8s infinite;
+      text-shadow: 0 0 10px rgba(179, 18, 37, 0.8);
     }
 
     @keyframes blinkCursor {
       0%, 100% { border-color: transparent; }
-      50% { border-color: #f3e5ab; }
+      50% { border-color: #b31225; }
     }
 
-    /* Badge für Dresscode */
     .info-badge {
-      background: rgba(255, 255, 255, 0.12);
+      background: rgba(122, 12, 27, 0.35);
       backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(179, 18, 37, 0.5);
       border-radius: 50px;
-      padding: 7px 16px;
-      font-size: 0.85rem;
-      letter-spacing: 0.08em;
-      margin-bottom: 14px;
-      color: #f3e5ab;
+      padding: 4px 12px;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+      color: #f7bdc4;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 4px;
       font-weight: 600;
+      box-shadow: 0 0 12px rgba(122, 12, 27, 0.35);
     }
 
-    /* Highlights Grid */
-    .highlights-box {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
+    /* Kompaktes Highlights-Grid */
+    .highlights-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
       gap: 6px;
-      margin-bottom: 18px;
       width: 100%;
+      margin-bottom: 10px;
     }
 
-    .tag {
-      background: rgba(0, 0, 0, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 4px 10px;
+    .grid-item {
+      background: rgba(10, 2, 4, 0.7);
+      border: 1px solid rgba(179, 18, 37, 0.3);
       border-radius: 12px;
-      font-size: 0.75rem;
-      color: #e2d8ce;
+      padding: 6px 4px;
+      text-align: center;
     }
 
-    /* Datum-Bereich */
+    .grid-icon {
+      font-size: 1rem;
+      display: block;
+      margin-bottom: 1px;
+    }
+
+    .grid-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 1px;
+    }
+
+    .grid-desc {
+      font-size: 0.62rem;
+      color: #d88b94;
+      margin: 0;
+      line-height: 1.1;
+    }
+
     .event-date-box {
-      margin: 0 0 16px 0;
-      background: rgba(255, 255, 255, 0.1);
+      margin: 0 0 8px 0;
+      background: rgba(15, 3, 5, 0.55);
       backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      padding: 14px 20px;
-      border-radius: 18px;
+      border: 1px solid rgba(179, 18, 37, 0.4);
+      padding: 8px 12px;
+      border-radius: 16px;
       width: 100%;
-      box-shadow: inset 0 0 15px rgba(255,255,255,0.05);
+      box-shadow: inset 0 0 15px rgba(122, 12, 27, 0.2);
     }
 
     .day-name {
-      font-size: 0.95rem;
+      font-size: 0.8rem;
       text-transform: uppercase;
-      letter-spacing: 0.22em;
-      color: #e2d8ce;
+      letter-spacing: 0.18em;
+      color: #d88b94;
     }
 
     .number {
-      font-size: 3.6rem;
+      font-size: 2.8rem;
       font-weight: 700;
       line-height: 1;
-      margin: 2px 0;
+      margin: 0;
       cursor: pointer;
       display: inline-block;
-      transition: transform 0.3s ease, color 0.3s ease;
+      transition: transform 0.2s ease, color 0.2s ease;
       color: #ffffff;
+      text-shadow: 0 0 12px rgba(179, 18, 37, 0.7);
     }
 
-    .number:hover {
-      transform: scale(1.12) rotate(-2deg);
-      color: #f3e5ab;
+    .number:active {
+      transform: scale(0.95);
     }
 
     .month-year {
-      font-size: 1.05rem;
-      letter-spacing: 0.1em;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
       font-weight: 600;
+      color: #ffffff;
     }
 
     .time-location {
-      font-size: 0.9rem;
-      margin-top: 6px;
-      color: #f3e5ab;
+      font-size: 0.78rem;
+      margin-top: 2px;
+      color: #c92a3a;
       font-weight: 600;
     }
 
-    /* Countdown */
     .countdown {
       display: flex;
       justify-content: center;
-      gap: 8px;
-      margin: 0 0 16px 0;
+      gap: 6px;
+      margin: 0 0 8px 0;
       width: 100%;
     }
 
     .countdown-item {
-      background: rgba(0, 0, 0, 0.45);
+      background: rgba(10, 2, 4, 0.75);
       backdrop-filter: blur(6px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 12px;
-      padding: 8px 5px;
+      border: 1px solid rgba(179, 18, 37, 0.35);
+      border-radius: 10px;
+      padding: 4px 2px;
       flex: 1;
-      min-width: 50px;
+      min-width: 40px;
     }
 
     .countdown-value {
-      font-size: 1.3rem;
+      font-size: 1.1rem;
       font-weight: 700;
       display: block;
       color: #ffffff;
+      line-height: 1;
     }
 
     .countdown-label {
-      font-size: 0.58rem;
+      font-size: 0.52rem;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      opacity: 0.8;
+      letter-spacing: 0.08em;
+      opacity: 0.9;
       margin-top: 2px;
       display: block;
-      color: #e2d8ce;
+      color: #d88b94;
     }
 
-    /* Location Box */
     .location-box {
-      font-size: 0.88rem;
-      margin-bottom: 18px;
-      line-height: 1.4;
-      background: rgba(0,0,0,0.38);
-      padding: 10px 15px;
+      font-size: 0.78rem;
+      margin-bottom: 10px;
+      line-height: 1.2;
+      background: rgba(10, 2, 4, 0.75);
+      padding: 8px 10px;
       border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.12);
+      border: 1px solid rgba(179, 18, 37, 0.35);
       width: 100%;
+      color: #ffffff;
     }
 
     /* Buttons */
     .button-group {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 6px;
       width: 100%;
     }
 
     .btn {
-      padding: 12px 20px;
-      font-size: 0.9rem;
+      padding: 9px 14px;
+      font-size: 0.82rem;
       font-family: 'Playfair Display', serif;
       color: #ffffff;
-      background: rgba(255, 255, 255, 0.15);
+      background: rgba(15, 3, 5, 0.5);
       backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.28);
-      border-radius: 30px;
+      border: 1px solid rgba(179, 18, 37, 0.4);
+      border-radius: 25px;
       cursor: pointer;
       text-decoration: none;
-      transition: all 0.3s ease;
+      transition: all 0.2s ease;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
       font-weight: 600;
     }
 
-    .btn:hover {
-      background: rgba(255, 255, 255, 0.28);
-      border-color: rgba(255, 255, 255, 0.6);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .btn-rsvp {
+      background: linear-gradient(135deg, rgba(179, 18, 37, 0.85) 0%, rgba(122, 12, 27, 0.95) 100%);
+      border-color: rgba(255, 255, 255, 0.3);
+      color: #ffffff;
+      box-shadow: 0 3px 12px rgba(179, 18, 37, 0.4);
     }
 
     .btn-primary {
-      background: rgba(243, 229, 171, 0.22);
-      border-color: rgba(243, 229, 171, 0.45);
-      color: #f3e5ab;
+      background: rgba(122, 12, 27, 0.45);
+      border-color: rgba(179, 18, 37, 0.6);
+      color: #f7bdc4;
     }
 
-    .btn-primary:hover {
-      background: rgba(243, 229, 171, 0.38);
-      color: #ffffff;
-    }
-
-    /* Overlay Panel für Ablaufplan */
-    .plan-overlay {
-      position: absolute;
+    /* POPUPS */
+    .modal {
+      display: none;
+      position: fixed;
       inset: 0;
-      background: rgba(15, 15, 17, 0.96);
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
-      z-index: 10;
-      padding: 30px 20px;
-      display: flex;
-      flex-direction: column;
+      background: rgba(8, 2, 4, 0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 1000;
+      justify-content: center;
       align-items: center;
-      overflow-y: auto;
-      transform: translateY(-100%);
-      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 15px;
     }
 
-    .plan-overlay.active {
-      transform: translateY(0);
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin: 15px 0 20px 0;
-      text-align: left;
+    .modal-content {
+      background: rgba(18, 3, 6, 0.95);
+      border: 1px solid rgba(179, 18, 37, 0.5);
+      padding: 22px 18px;
+      border-radius: 20px;
+      text-align: center;
+      max-width: 380px;
       width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.9), 0 0 25px rgba(122, 12, 27, 0.4);
+      position: relative;
+      animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-    .feature-card {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 12px;
-      padding: 8px 10px;
-      font-size: 0.78rem;
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
     }
 
-    .feature-card strong {
-      color: #f3e5ab;
-      display: block;
-      margin-bottom: 2px;
+    .modal-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2rem;
+      color: #b31225;
+      margin: 0 0 10px 0;
+      text-shadow: 0 2px 10px rgba(122, 12, 27, 0.6);
     }
 
     .timeline {
+      margin: 12px 0;
+      padding-left: 10px;
+      border-left: 2px solid rgba(179, 18, 37, 0.5);
       text-align: left;
-      margin: 10px 0 20px 5px;
-      padding-left: 15px;
-      border-left: 2px solid rgba(243, 229, 171, 0.4);
-      width: 100%;
     }
 
     .timeline-item {
-      margin-bottom: 16px;
+      margin-bottom: 12px;
       position: relative;
-      padding-left: 15px;
+      padding-left: 12px;
     }
 
     .timeline-item::before {
       content: "";
       position: absolute;
-      left: -21px;
+      left: -15px;
       top: 4px;
-      width: 10px;
-      height: 10px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
-      background: #f3e5ab;
-      box-shadow: 0 0 10px rgba(243, 229, 171, 0.8);
+      background: #b31225;
+      box-shadow: 0 0 8px rgba(179, 18, 37, 0.9);
     }
 
     .time {
       font-weight: 700;
-      color: #f3e5ab;
-      font-size: 0.9rem;
+      color: #c92a3a;
+      font-size: 0.82rem;
     }
 
     .event-title {
-      font-size: 0.98rem;
-      margin: 2px 0 0 0;
+      font-size: 0.88rem;
+      margin: 1px 0 0 0;
       font-weight: 600;
+      color: #ffffff;
     }
 
     .event-desc {
-      font-size: 0.78rem;
-      opacity: 0.8;
-      margin-top: 2px;
-    }
-
-    /* Easter Egg Popup */
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.82);
-      backdrop-filter: blur(8px);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
-
-    .modal-content {
-      background: #1a1a1d;
-      border: 1px solid rgba(243, 229, 171, 0.25);
-      padding: 28px 22px;
-      border-radius: 20px;
-      text-align: center;
-      max-width: 330px;
-      width: 100%;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.6);
-    }
-
-    .modal h3 {
-      margin-top: 0;
-      color: #f3e5ab;
-      font-size: 1.4rem;
-    }
-
-    .modal input {
-      width: 100%;
-      padding: 12px;
-      margin: 15px 0;
-      border-radius: 10px;
-      border: 1px solid #444;
-      background: #28282e;
-      color: #fff;
-      text-align: center;
-      font-size: 0.95rem;
-    }
-
-    .modal input:focus {
-      outline: none;
-      border-color: #f3e5ab;
-    }
-
-    #result {
-      margin-top: 12px;
-      font-size: 0.9rem;
-      font-weight: 600;
-    }
-
-    #secretImage {
-      display: none;
-      margin-top: 15px;
-      max-width: 100%;
-      border-radius: 10px;
+      font-size: 0.72rem;
+      opacity: 0.85;
+      margin-top: 1px;
+      color: #d88b94;
     }
 
     .close-btn {
       background: transparent;
       border: none;
-      color: #aaa;
-      font-size: 0.85rem;
-      margin-top: 15px;
+      color: #d88b94;
+      font-size: 0.8rem;
+      margin-top: 10px;
       cursor: pointer;
       text-decoration: underline;
+    }
+
+    /* Easter Egg Input */
+    .modal input {
+      width: 100%;
+      padding: 10px;
+      margin: 12px 0;
+      border-radius: 10px;
+      border: 1px solid rgba(179, 18, 37, 0.4);
+      background: #20050a;
+      color: #fff;
+      text-align: center;
+      font-size: 0.88rem;
+    }
+
+    .modal input:focus {
+      outline: none;
+      border-color: #b31225;
+    }
+
+    #result {
+      margin-top: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    #secretImage {
+      display: none;
+      margin-top: 10px;
+      max-width: 100%;
+      border-radius: 10px;
     }
   </style>
 </head>
 <body>
 
 <div class="card">
-  <!-- HAUPTSEITE -->
-  <div class="subtitle">Einladung zur Party</div>
-  <div class="title-script">Karo's B-day</div>
+  <div>
+    <div class="subtitle">Einladung zur Party</div>
+    <div class="title-script">Karo's B-day</div>
 
-  <div class="names-container">
-    <div class="names" id="typed"></div>
+    <div class="names-container">
+      <div class="names" id="typed"></div>
+    </div>
+
+    <div class="info-badge">
+      🔥 Dresscode: Sexy
+    </div>
   </div>
 
-  <div class="info-badge">
-    🔥 Dresscode: Sexy
+  <!-- Highlights Matrix -->
+  <div class="highlights-grid">
+    <div class="grid-item">
+      <span class="grid-icon">🍿</span>
+      <div class="grid-title">Snacks & Drinks</div>
+      <p class="grid-desc">All Night Long</p>
+    </div>
+    <div class="grid-item">
+      <span class="grid-icon">🫧</span>
+      <div class="grid-title">Whirlpool</div>
+      <p class="grid-desc">Badesachen mitnehmen</p>
+    </div>
+    <div class="grid-item">
+      <span class="grid-icon">🪩</span>
+      <div class="grid-title">Mini Club</div>
+      <p class="grid-desc">Dancefloor & Sound</p>
+    </div>
+    <div class="grid-item">
+      <span class="grid-icon">🔥</span>
+      <div class="grid-title">Lagerfeuer</div>
+      <p class="grid-desc">Garten Chillout</p>
+    </div>
   </div>
 
-  <div class="highlights-box">
-    <span class="tag">🎵 Musik</span>
-    <span class="tag">🍿 Snacks & Essen</span>
-    <span class="tag">🔥 Lagerfeuer</span>
-    <span class="tag">🪩 Mini Club</span>
-    <span class="tag">🫧 Whirlpool</span>
-    <span class="tag">🍺 Bierpong</span>
-  </div>
-
+  <!-- Datum -->
   <div class="event-date-box">
     <div class="day-name">Samstag</div>
-    <!-- Klicke auf die Zahl für das Easter Egg -->
-    <div class="number" title="Geheimnis?">17</div>
+    <div class="number" id="dateTrigger" title="Klick mich für Konfetti & Rätsel!">17</div>
     <div class="month-year">Oktober 2026</div>
     <div class="time-location">⏰ Einlass ab 19:00 Uhr</div>
   </div>
@@ -477,82 +483,64 @@
   <div class="countdown" id="countdown"></div>
 
   <div class="location-box">
-    📍 <strong>Location:</strong><br>
-    Richard-Sorge-Str. 52, Wildau
+    📍 <strong>Location:</strong> Richard-Sorge-Str. 52, Wildau
   </div>
 
   <div class="button-group">
-    <button class="btn btn-primary" id="addCalendarBtn">
+    <a href="https://wa.me/?text=Ich%20bin%20bei%20Karos%20B-Day%20dabei!%20🎉" target="_blank" class="btn btn-rsvp" id="rsvpBtn">
+      💌 Zusage via WhatsApp
+    </a>
+    <button class="btn btn-primary" id="downloadIcsBtn">
       📅 Zum Kalender hinzufügen
     </button>
     <button class="btn" id="openPlanBtn">
-      🍹 Ablaufplan & Party-Features
+      🍹 Ablaufplan der Nacht
     </button>
   </div>
+</div>
 
-  <!-- ABLAUFPLAN OVERLAY (Integrierte 2. Seite) -->
-  <div class="plan-overlay" id="planOverlay">
-    <div class="title-script" style="font-size: 2.2rem;">Ablauf & Specials</div>
-    <div class="subtitle" style="margin-bottom: 10px;">Programm & Highlights</div>
-
-    <div class="features-grid">
-      <div class="feature-card">
-        <strong>🍿 Snacks & Essen</strong>
-        Verpflegung für die ganze Nacht
-      </div>
-      <div class="feature-card">
-        <strong>🫧 Whirlpool</strong>
-        Badesachen mitbringen!
-      </div>
-      <div class="feature-card">
-        <strong>🪩 Mini Club</strong>
-        Sound, Lichter & Dancefloor
-      </div>
-      <div class="feature-card">
-        <strong>🔥 Lagerfeuer</strong>
-        Chillout-Area im Garten
-      </div>
-    </div>
+<!-- POPUP 1: Ablaufplan -->
+<div id="planModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-title">Ablauf der Nacht</div>
 
     <div class="timeline">
       <div class="timeline-item">
         <div class="time">19:00 Uhr</div>
         <div class="event-title">Einlass & Welcome Drinks</div>
-        <div class="event-desc">Ankommen, Anstoßen & Haus erkunden</div>
+        <div class="event-desc">Ankommen, Anstoßen & Haus auskundschaften</div>
       </div>
       <div class="timeline-item">
         <div class="time">20:00 Uhr</div>
-        <div class="event-title">Essen & Warm-Up</div>
-        <div class="event-desc">Snacks, Essen & Vorglühen</div>
+        <div class="event-title">Essen, Snacks & Warm-Up</div>
+        <div class="event-desc">Gemütliches Essen & Vorbereitung auf die Nacht</div>
       </div>
       <div class="timeline-item">
         <div class="time">21:00 Uhr</div>
         <div class="event-title">Bierpong & Party-Games</div>
-        <div class="event-desc">Spannende Turniere am Tisch</div>
+        <div class="event-desc">Spannende Turniere an der Bierpong-Station</div>
       </div>
       <div class="timeline-item">
         <div class="time">22:00 Uhr</div>
-        <div class="event-title">Mini Club, Whirlpool & Feuer</div>
-        <div class="event-desc">Party im Club, Entspannen im Whirlpool & Outdoor Vibes 🔥</div>
+        <div class="event-title">Mini Club, Whirlpool & Lagerfeuer</div>
+        <div class="event-desc">Party im Mini Club, Entspannen im Whirlpool & Outdoor-Vibes 🔥</div>
       </div>
     </div>
 
-    <button class="btn" id="closePlanBtn" style="width: 100%; margin-top: auto;">
-      ← Zurück zur Einladung
-    </button>
+    <button id="closePlanModal" class="btn btn-primary" style="width: 100%; margin-top: 8px;">Schließen</button>
   </div>
 </div>
 
-<!-- Easter Egg Popup -->
+<!-- POPUP 2: Easter Egg Rätsel -->
 <div id="easterEgg" class="modal">
   <div class="modal-content">
-    <h3>✨ Geheimes Rätsel</h3>
-    <p style="font-size: 0.88rem; opacity: 0.85; line-height: 1.4;">Wie heißt der Ort, an dem wir uns verlobt haben?</p>
+    <div class="modal-title" style="font-size: 1.6rem;">✨ Geheimes Rätsel</div>
+    <p style="font-size: 0.82rem; opacity: 0.85; line-height: 1.3;">Wie heißt der Ort, an dem wir uns verlobt haben?</p>
     <input id="answer" type="text" placeholder="Antwort eingeben...">
     <button id="checkAnswer" class="btn btn-primary" style="width:100%;">Prüfen</button>
     <div id="result"></div>
     <img id="secretImage" src="unserbild.jpg" alt="Unser Bild">
-    <button id="closeModal" class="close-btn">Schließen</button>
+    <button id="closeEasterEgg" class="close-btn">Schließen</button>
   </div>
 </div>
 
@@ -585,7 +573,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const distance = eventDate - now;
 
     if(distance < 0) {
-      countdownEl.innerHTML = "<div style='padding:8px; font-weight:bold; color:#f3e5ab;'>Die Party läuft! 🎉</div>";
+      countdownEl.innerHTML = "<div style='padding:4px; font-weight:bold; color:#b31225;'>Die Party läuft! 🎉</div>";
       return;
     }
 
@@ -605,47 +593,52 @@ document.addEventListener("DOMContentLoaded", function() {
   updateCountdown();
   setInterval(updateCountdown, 1000);
 
-  // Ablaufplan Overlay Steuerung
-  const planOverlay = document.getElementById('planOverlay');
-  document.getElementById('openPlanBtn').addEventListener('click', () => planOverlay.classList.add('active'));
-  document.getElementById('closePlanBtn').addEventListener('click', () => planOverlay.classList.remove('active'));
+  // Konfetti-Effekt
+  function triggerConfetti() {
+    confetti({
+      particleCount: 70,
+      spread: 60,
+      origin: { y: 0.7 },
+      colors: ['#b31225', '#f7bdc4', '#ffffff', '#8b0000']
+    });
+  }
 
-  // Dynamischer Kalendereintrag (.ics Download per JS)
-  document.getElementById('addCalendarBtn').addEventListener('click', () => {
-    const icsData = [
-      "BEGIN:VCALENDAR",
-      "VERSION:2.0",
-      "PRODID:-//Karo B-day//DE",
-      "BEGIN:VEVENT",
-      "SUMMARY:Karo's B-day & Erste Homeparty 🎉",
-      "DESCRIPTION:Dresscode: Sexy\\nFeatures: Musik, Snacks & Essen, Lagerfeuer, Mini Club, Whirlpool, Bierpong!",
-      "LOCATION:Richard-Sorge-Str. 52, Wildau",
-      "DTSTART:20261017T170000Z",
-      "DTEND:20261018T030000Z",
-      "END:VEVENT",
-      "END:VCALENDAR"
-    ].join("\n");
-
-    const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8;' });
-    const link = document.createElement('a');
-    link.href = window.URL.createObjectURL(blob);
-    link.setAttribute('download', 'Karo_Party.ics');
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  document.getElementById('rsvpBtn').addEventListener('click', () => {
+    triggerConfetti();
   });
 
-  // Easter Egg Modal
-  const dateNumber = document.querySelector('.number');
-  const modal = document.getElementById('easterEgg');
-  const closeModal = document.getElementById('closeModal');
+  // Popup 1: Ablaufplan Steuerungs-Logik
+  const openPlanBtn = document.getElementById('openPlanBtn');
+  const planModal = document.getElementById('planModal');
+  const closePlanModal = document.getElementById('closePlanModal');
 
-  dateNumber.addEventListener('click', () => {
-    modal.style.display = 'flex';
+  openPlanBtn.addEventListener('click', () => {
+    planModal.style.display = 'flex';
   });
 
-  closeModal.addEventListener('click', () => {
-    modal.style.display = 'none';
+  closePlanModal.addEventListener('click', () => {
+    planModal.style.display = 'none';
+  });
+
+  // Popup 2: Easter Egg Steuerungs-Logik
+  const dateTrigger = document.getElementById('dateTrigger');
+  const easterEggModal = document.getElementById('easterEgg');
+  const closeEasterEgg = document.getElementById('closeEasterEgg');
+
+  dateTrigger.addEventListener('click', () => {
+    triggerConfetti();
+    setTimeout(() => {
+      easterEggModal.style.display = 'flex';
+    }, 400);
+  });
+
+  closeEasterEgg.addEventListener('click', () => {
+    easterEggModal.style.display = 'none';
+  });
+
+  window.addEventListener('click', (e) => {
+    if (e.target === planModal) planModal.style.display = 'none';
+    if (e.target === easterEggModal) easterEggModal.style.display = 'none';
   });
 
   document.getElementById('checkAnswer').addEventListener('click', () => {
@@ -653,6 +646,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const normalizedAnswer = answer.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
     if(["norwegen", "tromso", "tromsø"].includes(normalizedAnswer)) {
+      triggerConfetti();
       document.getElementById('result').textContent = 'Richtig! 🎉';
       document.getElementById('result').style.color = '#a8ffb2';
       document.getElementById('secretImage').style.display = 'block';
@@ -661,6 +655,30 @@ document.addEventListener("DOMContentLoaded", function() {
       document.getElementById('result').style.color = '#ff8e8e';
       document.getElementById('secretImage').style.display = 'none';
     }
+  });
+
+  // Kalender-Datei (.ics)
+  document.getElementById('downloadIcsBtn').addEventListener('click', () => {
+    const icsData =
+`BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Karo B-day & Homeparty//DE
+BEGIN:VEVENT
+SUMMARY:Karo's B-day & Erste Homeparty 🎉
+DESCRIPTION:Dresscode: Sexy\\nFeatures: Musik, Snacks & Essen, Lagerfeuer, Mini Club, Whirlpool, Bierpong!
+LOCATION:Richard-Sorge-Str. 52, Wildau
+DTSTART:20261017T170000Z
+DTEND:20261018T030000Z
+END:VEVENT
+END:VCALENDAR`;
+
+    const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.setAttribute('download', 'Karo_Party.ics');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   });
 });
 </script>
